@@ -1,6 +1,7 @@
 import { css, html, LitElement, render } from 'lit';
 import { JPBaseElement } from './base/jp-base-element';
 import './base/jp-alert/jp-alert';
+import './base/jp-button/jp-button';
 
 // un componente deberia tener guion en su nombre de file
 // lit element es como extender de una etiqueta html
@@ -35,7 +36,7 @@ export class HelloWorld extends JPBaseElement {
 </br>
     <h2> Buttons </h2>
     <jp-button label="Click me" variant="primary" size="medium" url="https://www.google.com" target="_blank">
-      <span>Click me</span>
+      <span>Click me!</span>
     </jp-button>
     `;
   }
