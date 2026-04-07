@@ -1,4 +1,5 @@
 import { css, LitElement } from "lit";
+import type { CSSResultGroup } from "lit";
 
 export class JPBaseElement extends LitElement {
 
@@ -6,7 +7,7 @@ export class JPBaseElement extends LitElement {
       super.connectedCallback();
   }  
 
-  static styles = css`
+  static styles: CSSResultGroup = css`
     :host {
       display: block;
       border: 1px solid black;

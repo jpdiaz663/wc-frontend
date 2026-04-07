@@ -1,7 +1,35 @@
-import { css, html, LitElement, render } from 'lit';
+import { css, html } from 'lit';
 import { JPBaseElement } from './base/jp-base-element';
 import './base/jp-alert/jp-alert';
 import './base/jp-button/jp-button';
+import './base/jp-card-spotlight/jp-card-spotlight';
+
+const demoSpotlightCards = [
+  {
+    title: 'Opción A',
+    category: 'Producto',
+    description: 'Descripción breve de la primera tarjeta del spotlight.',
+    link: '#',
+    thumb: 'https://picsum.photos/seed/jp-a/480/320',
+    image: 'https://picsum.photos/seed/jp-a/960/720',
+  },
+  {
+    title: 'Opción B',
+    category: 'Servicio',
+    description: 'Segunda tarjeta con otro mensaje para el panel lateral.',
+    link: '#',
+    thumb: 'https://picsum.photos/seed/jp-b/480/320',
+    image: 'https://picsum.photos/seed/jp-b/960/720',
+  },
+  {
+    title: 'Opción C',
+    category: 'Insight',
+    description: 'Tercera opción; en móvil podés expandir y colapsar la selección.',
+    link: '#',
+    thumb: 'https://picsum.photos/seed/jp-c/480/320',
+    image: 'https://picsum.photos/seed/jp-c/960/720',
+  },
+] as const;
 
 // un componente deberia tener guion en su nombre de file
 // lit element es como extender de una etiqueta html
@@ -38,6 +66,13 @@ export class HelloWorld extends JPBaseElement {
     <jp-button label="Click me" variant="primary" size="medium" url="https://www.google.com" target="_blank">
       <span>Click me!</span>
     </jp-button>
+
+    <h2> Card Spotlight </h2>
+    <jp-card-spotlight .cards=${demoSpotlightCards} button-text="Ver más">
+      <span slot="title">The Emerald Core — Spotlight</span>
+      <span slot="description">Elegí una tarjeta; en escritorio el panel izquierdo muestra el detalle.</span>
+    </jp-card-spotlight>
+    
     `;
   }
 };
