@@ -9,8 +9,8 @@ import type { PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { JPBaseElement } from "../jp-base-element";
-import "../jp-button/jp-button";
+import { JPBaseElement } from "../../base/jp-base-element";
+import "../../base/base-button/base-button";
 
 import cardStyles from "./jp-card-spotlight.css?raw";
 

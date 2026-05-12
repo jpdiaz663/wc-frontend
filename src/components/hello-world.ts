@@ -1,8 +1,10 @@
 import { css, html } from 'lit';
 import { JPBaseElement } from './base/jp-base-element';
-import './base/jp-alert/jp-alert';
-import './base/jp-button/jp-button';
-import './base/jp-card-spotlight/jp-card-spotlight';
+import './base/base-alert/base-alert';
+import './base/base-button/base-button';
+import './jp/jp-card-spotlight/jp-card-spotlight';
+import './jp/jp-content-slider/jp-content-slider';
+import './base/base-icons/base-icons';
 
 const demoSpotlightCards = [
   {
@@ -58,7 +60,7 @@ export class HelloWorld extends JPBaseElement {
   render () {
     return html`
     <span>Hello ${this.name}!</span>
-    <jp-alert statusType="info" size="small" showIcon>
+    <jp-alert statusType="error" size="small" showIcon>
       <span>Success! Your action was successful.</span>
     </jp-alert>
 </br>
@@ -73,6 +75,11 @@ export class HelloWorld extends JPBaseElement {
       <span slot="description">Elegí una tarjeta; en escritorio el panel izquierdo muestra el detalle.</span>
     </jp-card-spotlight>
     
+    <h2> Icons </h2>
+    <base-icons name="battery-charging" size="55"></base-icons>
+    <base-icons name="leaf" library="jam" size="55"></base-icons>
+    <base-icons name="Food-beer-fill" library="remix" size="55"></base-icons>
+    <br><br><br>
     `;
   }
 };

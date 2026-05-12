@@ -1,0 +1,291 @@
+/* Splide se carga en jp-content-slider.ts con unsafeCSS(splide.min.css?raw). No usar @import aquí. */
+
+:host {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--space-8, 2rem);
+  background: transparent;
+  font-family: var(--font-family-sans, system-ui, sans-serif);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.splide {
+  position: relative;
+}
+
+/* Lista semántica: reset sin perder estilos de Splide en .splide__list */
+ul.splide__list {
+  list-style: none;
+}
+
+/* Splide oculta paginación sin overflow (.splide:not(.is-overflow)); con 2 slides y perPage 2 no hay puntos */
+.splide.has-multiple-slides .splide__pagination {
+  display: flex !important;
+}
+
+.splide__arrow {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.splide__arrow:disabled {
+  visibility: hidden;
+}
+
+.splide__arrow-container--prev,
+.splide__arrow-container--next {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.splide__arrow-container--prev {
+  left: 0;
+}
+
+.splide__arrow-container--next {
+  right: 0;
+}
+
+.splide__arrow--prev {
+  justify-content: flex-start;
+}
+
+.splide__arrow--prev svg {
+  margin: var(--space-8, 2rem);
+}
+
+.splide__arrow--next {
+  justify-content: flex-end;
+}
+
+.splide__arrow--next svg {
+  margin: var(--space-8, 2rem);
+}
+
+.splide__arrow svg .circle {
+  cursor: pointer;
+  transition: fill var(--motion-duration-normal, 200ms) var(--motion-easing-standard, ease);
+  fill: var(--color-brand-400, #34d399);
+}
+
+.splide__arrow svg .circle:hover {
+  fill: var(--color-brand-primary, #059669);
+}
+
+.splide__track {
+  position: relative;
+  margin-bottom: var(--space-8, 2rem);
+  padding-top: var(--space-4, 1rem);
+  padding-bottom: var(--space-4, 1rem);
+  /* Evita colapso si la lista usa height: 100% sin altura definida en el padre */
+  min-height: 4rem;
+}
+
+/* Los degradados van detrás del carril de slides (antes z-index: 20 tapaba todo el contenido). */
+.splide__track > .splide__list {
+  position: relative;
+  z-index: 1;
+}
+
+.splide__track::after,
+.splide__track::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 6rem;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .splide__track::after,
+  .splide__track::before {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .splide__track::after,
+  .splide__track::before {
+    width: 9rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .splide__track::after,
+  .splide__track::before {
+    width: 13rem;
+  }
+}
+
+.splide__track::after {
+  right: 0;
+}
+
+.splide__track::before {
+  left: 0;
+}
+
+.splide__slide {
+  /* Splide controla el ancho vía transform; min-width fijo rompe perPage y puede dejar slides en 0px visibles */
+  min-width: 0;
+}
+
+.splide__slide.is-visible {
+  visibility: visible;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+ul.splide__pagination {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: transparent;
+}
+
+.splide__pagination {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4, 1rem);
+  background: transparent;
+}
+
+.splide__pagination li button {
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border: 1px solid var(--color-brand-700, #047857);
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-surface-default, #fff);
+  transition:
+    background var(--motion-duration-normal, 200ms) ease,
+    border-color var(--motion-duration-normal, 200ms) ease;
+}
+
+@media (min-width: 1024px) {
+  .splide__pagination li button {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.splide__pagination li button:hover,
+.splide__pagination li button:focus-visible,
+.splide__pagination li button[aria-current="true"] {
+  border-color: var(--color-brand-primary, #059669);
+  background: var(--color-brand-primary, #059669);
+}
+
+.splide__pagination li button:focus-visible {
+  outline: 2px solid var(--color-focus-ring, #047857);
+  outline-offset: 2px;
+}
+
+/* Variantes de track (fade en bordes) */
+.splide__track.default,
+.splide__track.white,
+.splide__track.transparent,
+.splide__track.brand-subtle,
+.splide__track.brand-muted,
+.splide__track.surface {
+  --splide-gradient-color: 255, 255, 255;
+}
+
+.splide__track.brand-subtle {
+  --splide-gradient-color: 236, 253, 245;
+}
+
+.splide__track.brand-muted {
+  --splide-gradient-color: 209, 250, 229;
+}
+
+.splide__track.surface {
+  --splide-gradient-color: 250, 250, 250;
+}
+
+.splide__track.default::after,
+.splide__track.white::after,
+.splide__track.transparent::after,
+.splide__track.brand-subtle::after,
+.splide__track.brand-muted::after,
+.splide__track.surface::after {
+  background-image: linear-gradient(
+    to right,
+    rgba(var(--splide-gradient-color), 0),
+    rgba(var(--splide-gradient-color), 0.5),
+    rgba(var(--splide-gradient-color), 0.85),
+    rgba(var(--splide-gradient-color), 1)
+  );
+}
+
+.splide__track.default::before,
+.splide__track.white::before,
+.splide__track.transparent::before,
+.splide__track.brand-subtle::before,
+.splide__track.brand-muted::before,
+.splide__track.surface::before {
+  background-image: linear-gradient(
+    to left,
+    rgba(var(--splide-gradient-color), 0),
+    rgba(var(--splide-gradient-color), 0.5),
+    rgba(var(--splide-gradient-color), 0.85),
+    rgba(var(--splide-gradient-color), 1)
+  );
+}
+
+/* Transiciones en slides */
+.splide__list > .splide__slide {
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.splide__list > .splide__slide.card-hover-animation:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md, 8px);
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  :host {
+    margin-bottom: 0;
+  }
+
+  .splide__track {
+    margin-bottom: var(--space-4, 1rem);
+  }
+}
