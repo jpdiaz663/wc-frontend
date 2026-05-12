@@ -60,9 +60,9 @@ export class HelloWorld extends JPBaseElement {
   render () {
     return html`
     <span>Hello ${this.name}!</span>
-    <jp-alert statusType="error" size="small" showIcon>
+    <base-alert statusType="error" size="small" showIcon>
       <span>Success! Your action was successful.</span>
-    </jp-alert>
+    </base-alert>
 </br>
     <h2> Buttons </h2>
     <jp-button label="Click me" variant="primary" size="medium" url="https://www.google.com" target="_blank">

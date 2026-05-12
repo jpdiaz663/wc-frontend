@@ -1,181 +1,133 @@
-# WC Frontend (Lit + Vite)
+# WC Frontend
 
-A small demo frontend built with [Lit](https://lit.dev/) and [Vite](https://vitejs.dev/).  
-It showcases custom web components like alerts and buttons, and a simple `hello-world` component that uses them.
-
----
-
-## Tech Stack
-
-- **Build tool**: Vite
-- **Language**: TypeScript (compiled by Vite)
-- **UI library**: Lit (`lit`, `lit/decorators.js`, Lit directives)
-- **Target**: Modern browsers (ES2021)
+Biblioteca de **Web Components** con [Lit](https://lit.dev/), empaquetada con [Vite](https://vitejs.dev/). Incluye componentes base reutilizables, bloques de producto (`jp-*`), **tokens de diseño** (CSS), **Tailwind** como capa de utilidades y **Storybook** para documentación y desarrollo aislado.
 
 ---
 
-## Getting Started
+## Requisitos
 
-### 1. Install dependencies
+- [Node.js](https://nodejs.org/) (LTS recomendado)
+- npm (incluido con Node)
 
-From the project root:
+---
+
+## Puesta en marcha
 
 ```bash
 npm install
 ```
 
-### 2. Start the dev server
+### Desarrollo (app demo con Vite)
 
 ```bash
 npm run serve
 ```
 
-Then open the URL that Vite prints in the terminal (for example `http://localhost:5173` or similar).
+Abre la URL que indique la consola (por defecto suele ser `http://localhost:5173`). La página de entrada carga `index.html` y el bundle definido en `src/index.js`.
 
-### 3. Build for production
+### Build de producción
 
 ```bash
 npm run build
 ```
 
-The production build will be output to the `dist/` folder.
+Salida en la carpeta `dist/`.
+
+### Storybook
+
+```bash
+npm run storybook
+```
+
+Por defecto en `http://localhost:6006`. Las historias viven junto a cada componente: `src/components/**/*.stories.ts`.
+
+```bash
+npm run build-storybook
+```
+
+Genera el sitio estático de Storybook (por defecto en `storybook-static/`).
 
 ---
 
-## Project Structure
+## Stack
 
-Key files:
-
-- `package.json` – dependencies and scripts
-- `tsconfig.json` – TypeScript configuration (configured for Lit decorators)
-- `src/index.js` – app entry, imports the main component
-- `src/components/hello-world.ts` – main sample component
-- `src/components/base/jp-base-element.ts` – shared base class for components
-- `src/components/base/jp-alert/jp-alert.ts` – alert component
-- `src/components/base/jp-alert/jp-alert.css` – (optional) styles for alerts
-- `src/components/base/jp-button/jp-button.ts` – button component
-- `src/components/base/jp-icons/jp-icons.ts` – icon definitions used by alerts
+| Área | Tecnología |
+|------|------------|
+| Componentes | Lit 3 |
+| Lenguaje | TypeScript |
+| Bundler / dev server | Vite 7 |
+| Estilos globales / utilidades | Tailwind CSS 3 + PostCSS + Autoprefixer |
+| Diseño | Tokens en `tokens/` importados desde `src/styles/main.css` |
+| Documentación UI | Storybook 10 (`@storybook/web-components-vite`, addons a11y y docs) |
+| Carrusel | [@splidejs/splide](https://splidejs.com/) en `jp-content-slider` |
+| Iconos | Feather por defecto en alertas; `base-icons` con varias librerías (Feather, Jam, Lucide, Remix, etc.) |
 
 ---
 
-## Components Overview
+## Estructura del repositorio
 
-### `<hello-world>`
-
-Defined in `src/components/hello-world.ts`.
-
-- Extends `JPBaseElement`.
-- Reactive property: `name` (string, default `"Juan"`).
-- Renders:
-  - A greeting: `Hello {name}!`
-  - A `<jp-alert>` with `statusType="info"`, `size="small"`, `showIcon`.
-  - A `<jp-button>` example.
-
-Usage:
-
-```html
-<hello-world name="Alice"></hello-world>
+```
+wc-frontend/
+├── index.html              # Punto de entrada HTML (demo)
+├── vite.config.ts          # Configuración de Vite
+├── tsconfig.json           # TypeScript (decoradores Lit)
+├── tailwind.config.js      # Tailwind (preset en tailwind.preset.js)
+├── tokens/
+│   ├── tokens.json         # Fuente de tokens (referencia / tooling)
+│   └── tokens.css          # Variables CSS consumidas por la app
+├── .storybook/             # Configuración de Storybook
+├── src/
+│   ├── index.js            # Entrada: estilos + registro de componentes demo
+│   ├── styles/
+│   │   └── main.css        # tokens + @tailwind base/components/utilities
+│   ├── components/
+│   │   ├── hello-world.ts  # Pantalla de demostración
+│   │   ├── base/           # Primitivos compartidos
+│   │   │   ├── jp-base-element.ts
+│   │   │   ├── base-alert/
+│   │   │   ├── base-button/
+│   │   │   └── base-icons/  # + libraries/ (feather, jam, lucide, remix, …)
+│   │   └── jp/             # Componentes de producto / bloques
+│   │       ├── jp-card-spotlight/
+│   │       └── jp-content-slider/
+│   └── stories/            # Ejemplos por defecto de Storybook (plantilla)
+└── dist/                   # Salida de `npm run build` (no versionar como fuente)
 ```
 
 ---
 
-### `<jp-alert>`
+## Componentes y etiquetas custom
 
-Defined in `src/components/base/jp-alert/jp-alert.ts`.
+Los nombres de archivo usan **kebab-case**; el **tag** HTML es el que define cada clase (`@customElement` o `customElements.define`).
 
-**Attributes / properties:**
+| Tag | Origen (ruta principal) | Rol |
+|-----|------------------------|-----|
+| `<hello-world>` | `src/components/hello-world.ts` | Demo que compone alerta, botón, spotlight e iconos |
+| `<base-alert>` | `src/components/base/base-alert/base-alert.ts` | Alerta con `statusType`, `size`, `showIcon`, `icon` (Feather) |
+| `<jp-button>` | `src/components/base/base-button/base-button.ts` | Botón o enlace estilizado (`label`, `variant`, `size`, `url`, `target`, …) |
+| `<base-icons>` | `src/components/base/base-icons/base-icons.ts` | Icono SVG según `name`, `library`, `size` |
+| `<jp-card-spotlight>` | `src/components/jp/jp-card-spotlight/jp-card-spotlight.ts` | Grid + panel tipo spotlight; prop `cards`, slots de cabecera |
+| `<jp-content-slider>` | `src/components/jp/jp-content-slider/jp-content-slider.ts` | Carrusel Splide; hijos como slides |
 
-- `statusType`: `"success" | "error" | "warning | "info"`  
-  Controls border color and icon.
-- `size`: `"small" | "medium" | "large"`  
-  Controls padding.
-- `showIcon`: `boolean`  
-  When `true`, shows an icon based on `statusType`.
-
-**Behavior:**
-
-- Uses `@property` decorators from `lit/decorators.js`.
-- Styles are defined via static `styles` using `css`.
-- Icons for each status come from `icons` in `jp-icons.ts`.
-- For the `"info"` status, an SVG icon is rendered via the `unsafeHTML` directive.
-
-Example:
+Ejemplo mínimo tras importar el módulo que registra los componentes:
 
 ```html
-<jp-alert statusType="success" size="medium" showIcon>
-  <span>Success! Your action was successful.</span>
-</jp-alert>
-```
+<base-alert statusType="info" size="medium" showIcon>
+  <span>Mensaje en el slot por defecto.</span>
+</base-alert>
 
----
-
-### `<jp-button>`
-
-Defined in `src/components/base/jp-button/jp-button.ts`.
-
-**Attributes / properties:**
-
-- `label`: `string` – accessible label.
-- `variant`: `"primary" | "secondary" | "tertiary"` – visual variant.
-- `size`: `"small" | "medium" | "large"` – button size.
-- `disabled`: `boolean` – when present, marks the button as disabled.
-- `url`: `string` – if set, renders an `<a>` instead of `<button>`.
-- `target`: `"_self" | "_blank" | "_parent" | "_top"` – link target when `url` is set.
-
-**Behavior:**
-
-- If `url` is provided, renders an anchor (`<a>`) with the button styles.
-- Otherwise renders a native `<button>`.
-- Uses `ifDefined` directive to omit undefined attributes.
-- Keeps `aria-disabled` in sync in `updated()` when `disabled` is set as an attribute.
-
-Example (link-style button):
-
-```html
-<jp-button
-  label="Go to Google"
-  variant="primary"
-  size="medium"
-  url="https://www.google.com"
-  target="_blank"
->
-  <span>Click me</span>
+<jp-button label="Acción" variant="primary" size="medium">
+  <span>Texto visible</span>
 </jp-button>
-```
 
-Example (regular button):
-
-```html
-<jp-button label="Submit" variant="secondary" size="small">
-  <span>Submit</span>
-</jp-button>
+<base-icons name="heart" library="feather" size="32"></base-icons>
 ```
 
 ---
 
-## Development Notes
+## Notas de desarrollo
 
-- **Decorators**: TypeScript is configured with `"experimentalDecorators": true` and `"useDefineForClassFields": false` to work well with Lit’s `@property` and custom elements.
-- **Unsafe HTML**:  
-  `unsafeHTML` is imported from `lit/directives/unsafe-html.js` and is used only to render trusted HTML snippets (like the SVG icon string in `jp-icons.ts`). Do not pass untrusted user content into `unsafeHTML`.
-- **Custom elements registration**:  
-  Components call `customElements.define(...)` only if the tag is not already registered, to avoid duplicate registration errors.
-
----
-
-## How to Use in HTML
-
-Include your built bundle (from Vite) in an HTML page and register `hello-world` by importing `src/index.js`. Once the script is loaded, you can use:
-
-```html
-<hello-world></hello-world>
-<jp-alert statusType="error" size="large" showIcon>
-  <span>Something went wrong.</span>
-</jp-alert>
-<jp-button label="Primary" variant="primary" size="medium">
-  <span>Primary</span>
-</jp-button>
-```
-
-The components will be upgraded automatically by the browser’s Custom Elements API.
-
+- **Decoradores**: `tsconfig.json` usa `experimentalDecorators: true` y `useDefineForClassFields: false` para compatibilidad con Lit.
+- **SVG no confiable**: `base-alert` usa `unsafeSVG` de Lit solo con SVG generado internamente (iconos). No alimentar estas APIs con contenido de usuario sin sanitizar.
+- **Registro de custom elements**: donde aplica, se evita doble registro comprobando `customElements.get(...)` antes de `define`.
+- **Tokens**: variables como `--color-text-primary` o `--font-family-sans` viven en `tokens/tokens.css`; Tailwind y los componentes pueden apoyarse en ellas vía `var(...)`.

@@ -13,8 +13,8 @@ type AlertArgs = {
 };
 
 const meta = {
-  title: 'Base/JP Alert',
-  component: 'jp-alert',
+  title: 'Base/Base Alert',
+  component: 'base-alert',
   tags: ['autodocs'],
   argTypes: {
     statusType: { control: 'select', options: [...statusTypes] },
