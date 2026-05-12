@@ -30,6 +30,7 @@ export interface JPAlertInterface extends HTMLElement {
 @customElement('base-alert')
 export class BaseAlert extends JPBaseElement {
 
+  //pruebita
     static styles = css`
       :host {
         display: block;
