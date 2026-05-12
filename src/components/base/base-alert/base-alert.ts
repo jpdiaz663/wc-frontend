@@ -27,8 +27,8 @@ export interface JPAlertInterface extends HTMLElement {
     icon: string;
 }
 
-@customElement('jp-alert')
-export class JPAlert extends JPBaseElement implements JPAlertInterface {
+@customElement('base-alert')
+export class BaseAlert extends JPBaseElement {
 
     static styles = css`
       :host {

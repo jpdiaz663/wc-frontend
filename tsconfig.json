@@ -18,5 +18,10 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vite/client"]
   },
-  "include": ["./src/components/**/*.ts", "./src/vite-env.d.ts"]
+  "include": [
+    ".storybook/**/*",
+    "./src/components/**/*.ts",
+    "./src/vite-env.d.ts",
+    "./vite.config.ts"
+  ]
 }
